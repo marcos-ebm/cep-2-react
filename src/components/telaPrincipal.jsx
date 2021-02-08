@@ -2,21 +2,44 @@ import React from 'react';
 import PuxarCep from './puxarCep';
 import {Box} from '@material-ui/core';
 import TextField  from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
+import Resultado from './resultado';
 
-const useStyles = makeStyles((theme) => ({
-      root: {
-        '& > *': {
-          margin: theme.spacing(1),
-          width: '25ch',
-        },
-      },
-    }));
+
 
 const TelaPrincipal = () => {
+
+      const [cep, setCep] = React.useState('');
+      const [endereco, setEndereco] = React.useState('');
+      const handleCep = value => {
+            setCep(value.target.value);
+      }
+      let resultado = true;
+      
+      // console.log(cep);
+      React.useEffect( () => {
+            PuxarCep(cep).then( e => {
+                  setEndereco(e);
+            }).catch()
+      })
+
       return(
             <Box>
-                  <TextField id="outlined-basic" label="Digite o CEP" variant="outlined" />
+                  <TextField id="outlined-basic" label="Digite o CEP" variant="outlined" value={cep} onChange={handleCep}/>
+                  {/* <input placeholder="Digite o CEP" onChange={handleCep}></input> */}
+                  
+                  <Resultado 
+                        resultado={resultado}
+                        cep={endereco.cep} 
+                        localidade={endereco.localidade}
+                        logradouro={endereco.logradouro}
+                        complemento={endereco.complemento}
+                        bairro={endereco.bairro}
+                        uf={endereco.uf}
+                        ibge={endereco.ibge}
+                        gia={endereco.gia}
+                        ddd={endereco.ddd}
+                        siafi={endereco.siafi}
+                  />
             </Box>
       );
 }
