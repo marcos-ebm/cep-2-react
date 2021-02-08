@@ -4,8 +4,6 @@ import {Box} from '@material-ui/core';
 import TextField  from '@material-ui/core/TextField';
 import Resultado from './resultado';
 
-
-
 const TelaPrincipal = () => {
 
       const [cep, setCep] = React.useState('');
@@ -14,19 +12,18 @@ const TelaPrincipal = () => {
             setCep(value.target.value);
       }
       let resultado = true;
-      
-      // console.log(cep);
+
       React.useEffect( () => {
             PuxarCep(cep).then( e => {
                   setEndereco(e);
             }).catch()
       })
 
+
       return(
             <Box>
-                  <TextField id="outlined-basic" label="Digite o CEP" variant="outlined" value={cep} onChange={handleCep}/>
-                  {/* <input placeholder="Digite o CEP" onChange={handleCep}></input> */}
-                  
+                  <TextField id="outlined-basic" label="Digite o CEP" variant="outlined" value={cep} onChange={handleCep} />
+
                   <Resultado 
                         resultado={resultado}
                         cep={endereco.cep} 
